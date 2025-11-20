@@ -6,7 +6,7 @@
 
 Алгоритм Дейкстры
 
-Псевдокод
+Псевдокод:
 
     function Dijkstra(graph, source):
         create vertex set Q
@@ -34,7 +34,8 @@
   prev[]: массив предков для восстановления маршрутов
 
 Алгоритм A* (A-Star)
-Псевдокод
+
+Псевдокод:
 
     function AStar(start, goal, graph, h):
         openSet ← {start}
