@@ -6,7 +6,7 @@
 
 Алгоритм Дейкстры
 
-[Псевдокод]
+Псевдокод
 function Dijkstra(graph, source):
     create vertex set Q
     for each vertex v in Graph:
@@ -35,7 +35,7 @@ function Dijkstra(graph, source):
   prev[]: массив предков для восстановления маршрутов
 
 Алгоритм A* (A-Star)
-[Псевдокод]
+Псевдокод
 function AStar(start, goal, graph, h):
     openSet ← {start}
     gScore ← map with default value INFINITY
