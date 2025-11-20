@@ -7,18 +7,17 @@
 Алгоритм Дейкстры
 
 Псевдокод
-function Dijkstra(graph, source):
-    create vertex set Q
-    for each vertex v in Graph:
-        dist[v] ← INFINITY
-        prev[v] ← UNDEFINED
-        add v to Q
-    dist[source] ← 0
 
+    function Dijkstra(graph, source):
+        create vertex set Q
+        for each vertex v in Graph:
+            dist[v] ← INFINITY
+            prev[v] ← UNDEFINED
+            add v to Q
+        dist[source] ← 0
     while Q is not empty:
         u ← vertex in Q with min dist[u]
         remove u from Q
-
         for each neighbor v of u:
             alt ← dist[u] + length(u, v)
             if alt < dist[v]:
@@ -36,30 +35,32 @@ function Dijkstra(graph, source):
 
 Алгоритм A* (A-Star)
 Псевдокод
-function AStar(start, goal, graph, h):
-    openSet ← {start}
-    gScore ← map with default value INFINITY
-    gScore[start] ← 0
-    fScore ← map with default value INFINITY
-    fScore[start] ← h(start, goal)
-    cameFrom ← empty map
 
-    while openSet is not empty:
-        current ← vertex in openSet with lowest fScore
-        if current == goal:
-            return reconstruct_path(cameFrom, current)
-        
-        remove current from openSet
-        for each neighbor of current:
-            tentative_gScore ← gScore[current] + graph[current][neighbor]
-            if tentative_gScore < gScore[neighbor]:
-                cameFrom[neighbor] ← current
-                gScore[neighbor] ← tentative_gScore
-                fScore[neighbor] ← gScore[neighbor] + h(neighbor, goal)
-                if neighbor not in openSet:
-                    openSet ← openSet ∪ {neighbor}
+    function AStar(start, goal, graph, h):
+        openSet ← {start}
+        gScore ← map with default value INFINITY
+        gScore[start] ← 0
+        fScore ← map with default value INFINITY
+        fScore[start] ← h(start, goal)
+        cameFrom ← empty map
     
-    return failure
+        while openSet is not empty:
+            current ← vertex in openSet with lowest fScore
+            if current == goal:
+                return reconstruct_path(cameFrom, current)
+            
+            remove current from openSet
+            for each neighbor of current:
+                tentative_gScore ← gScore[current] + graph[current][neighbor]
+                if tentative_gScore < gScore[neighbor]:
+                    cameFrom[neighbor] ← current
+                    gScore[neighbor] ← tentative_gScore
+                    fScore[neighbor] ← gScore[neighbor] + h(neighbor, goal)
+                    if neighbor not in openSet:
+                        openSet ← openSet ∪ {neighbor}
+        
+        return failure
+        
 Входные данные
     Граф (graph): матрица смежности n×n (аналогично Дейкстре)
     Старт (start): целое число 0..n-1 - начальная вершина
