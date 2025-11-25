@@ -3,6 +3,7 @@
 #include <tuple>
 #include <limits>
 #include <stdlib.h>
+#include <fstream>
 
 using namespace std;
 
@@ -63,31 +64,41 @@ void printMatrix(const vector<vector<double>>& matrix) {
         cout << endl;
     }
 }
-    
-int main() {
-    setlocale(LC_ALL, "Russian");
-    int n;
+void solveTestCase(int index, ifstream& input, ofstream& output){
+    int numOfRibs;
     int start;
     int end;
-    vector<tuple<int, int, double>> ribs(n);
-    cin >> n;
-    cin >> start;
-    cin >> end;
-    for(int i = 0; i < n; i++){
+    input >> numOfRibs >> start >> end;
+    vector<tuple<int, int, double>> ribs(numOfRibs);
+    for(int i = 0; i < numOfRibs; i++){
         int u, v, w;
-        cin >> u >> v >> w;
+        input >> u >> v >> w;
         ribs[i] = make_tuple(u, v, w);
     }
+    vector<vector<double>> graph = ribsToAdjacencyMatrix(numOfRibs, ribs);
+    vector<double> distances = dijkstra(numOfRibs, graph, start);
 
-    vector<vector<double>> graph = ribsToAdjacencyMatrix(n, ribs);
-    vector<double> distances = dijkstra(n, graph, start);
-    
-    cout << "\nКратчайшее расстояние до вершины " << end << ": ";
+    output << "Тест " << index << ": ";
     if (distances[end] == INF) {
-        cout << "n/a" << endl;
+        output << "n/a" << endl;
     } else {
-        cout << distances[end] << endl;
+        output << distances[end] << endl;
     }
-    system("pause");
-    printMatrix(graph);
 }
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    std::ifstream input("input.txt"); 
+    std::ofstream output("results.txt");  
+
+    int numOfTestCases;
+    input >> numOfTestCases;
+    for(int i = 0; i < numOfTestCases; i++){
+        solveTestCase(i+1,input,output);
+    }
+    input.close();
+    output.close();
+    cout << "The results are written to results.txt"<< endl;
+    system("pause");
+}    
+// printMatrix(graph);

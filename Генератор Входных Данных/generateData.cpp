@@ -8,9 +8,9 @@ using namespace std;
 
 int main() {
     ofstream file("input.txt");
-    int numTests;
-    cout << "\n Num of tests : \n";
-    cin >> numTests;
+    int numOfTests;
+    cout << "\nNum of tests : ";
+    cin >> numOfTests;
     int minNumOfVertices = 10; 
     int maxNumOfVertices = 300; 
     int minNumOfRibs = 300; 
@@ -24,8 +24,8 @@ int main() {
     uniform_int_distribution<> genNumOfVertexes(minNumOfVertices, maxNumOfVertices);
     uniform_int_distribution<> genNumOfRibs(minNumOfRibs, maxNumOfRibs);
     uniform_int_distribution<> weightDist(minWeight, maxWeight);
-    
-    for (int testNum = 0; testNum < numTests; testNum++) {
+    file << numOfTests <<"\n";
+    for (int testNum = 0; testNum < numOfTests; testNum++) {
         int numOfVertexes = genNumOfVertexes(gen);
         int numOfRibs = genNumOfRibs(gen);
         uniform_int_distribution<> vertexPoint(0, numOfVertexes - 1);
@@ -43,7 +43,7 @@ int main() {
     }
     if (file.is_open()) {
         file.close();
-        cout << "Generated " << numTests << " tests\n";
+        cout << "Generated " << numOfTests << " tests\n";
     } else {
         cerr << "Error\n";
         return 1;
