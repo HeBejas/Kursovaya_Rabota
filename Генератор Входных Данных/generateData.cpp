@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    ofstream file("hello.txt");
+    ofstream file("input.txt");
     int numTests = 10;
     // cin >> numTests;
     int minNumOfVertices = 10; 
