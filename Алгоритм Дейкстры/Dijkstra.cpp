@@ -4,6 +4,7 @@
 #include <limits>
 #include <stdlib.h>
 #include <fstream>
+#include <chrono>
 
 using namespace std;
 
@@ -30,7 +31,6 @@ vector<double> dijkstra(int n, const vector<vector<double>>& graph, int source) 
                 double newDist = dist[u] + graph[u][z];
                 if (newDist < dist[z]) {
                     dist[z] = newDist;
-                    // Здесь можно добавить: prev[v] = u; для сохранения пути
                 }
             }
         }
@@ -64,7 +64,16 @@ void printMatrix(const vector<vector<double>>& matrix) {
         cout << endl;
     }
 }
-void solveTestCase(int index, ifstream& input, ofstream& output){
+
+struct TestResult{
+    int distance;
+    int time;
+    string text;
+};
+
+TestResult solveTestCase(ifstream& input){
+    TestResult result;
+
     int numOfRibs;
     int start;
     int end;
@@ -75,26 +84,39 @@ void solveTestCase(int index, ifstream& input, ofstream& output){
         input >> u >> v >> w;
         ribs[i] = make_tuple(u, v, w);
     }
+
+    auto startTime = chrono::high_resolution_clock::now();
+
     vector<vector<double>> graph = ribsToAdjacencyMatrix(numOfRibs, ribs);
     vector<double> distances = dijkstra(numOfRibs, graph, start);
 
-    output << "Тест " << index << ": ";
+    auto endTime = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(endTime - startTime);
+    
+    result.time = duration.count(); 
+
     if (distances[end] == INF) {
-        output << "n/a" << endl;
+        result.text = "Путь не найден";
+        result.distance = -1;
     } else {
-        output << distances[end] << endl;
+        result.text = "Путь найден";
+        result.distance = distances[end];
     }
+    return result;
 }
 int main() {
-    setlocale(LC_ALL, "Russian");
-
     std::ifstream input("input.txt"); 
     std::ofstream output("results.txt");  
 
     int numOfTestCases;
     input >> numOfTestCases;
     for(int i = 0; i < numOfTestCases; i++){
-        solveTestCase(i+1,input,output);
+        TestResult result = solveTestCase(input);
+        output << "Тест " << i+1 << ": " << endl;
+        output << "  Статус: " << result.text << endl;
+        output << "  Результат: " << result.distance << endl;
+        output << "  Время: " << result.time << " мкс" << endl;
+        output << "---" << endl;
     }
     input.close();
     output.close();
