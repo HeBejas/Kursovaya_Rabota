@@ -127,7 +127,7 @@ int main() {
     double averageTime = totalTime / numOfTestCases;
     output.seekp(0);
     output << "Общее время выполнения: " << totalTime << " мкс" << endl;
-    output << "Среднее время выполнения: " << averageTime << " mks" << endl;
+    output << "Среднее время выполнения: " << averageTime << " мкс" << endl;
     output << "Количество тестов: " << numOfTestCases << endl << endl;
     input.close();
     output.close();
