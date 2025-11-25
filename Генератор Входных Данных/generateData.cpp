@@ -9,6 +9,7 @@ using namespace std;
 int main() {
     ofstream file("input.txt");
     int numTests;
+    cout << "\n Num of tests : \n";
     cin >> numTests;
     int minNumOfVertices = 10; 
     int maxNumOfVertices = 300; 
