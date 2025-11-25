@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <chrono>
+#include <iomanip>
 
 using namespace std;
 
@@ -108,8 +109,12 @@ int main() {
     std::ifstream input("input.txt"); 
     std::ofstream output("results.txt");  
 
+    output << setw(150);
+    output << "\n";
+    output << endl << endl << endl << endl << endl;
     int numOfTestCases;
     input >> numOfTestCases;
+    double totalTime = 0;
     for(int i = 0; i < numOfTestCases; i++){
         TestResult result = solveTestCase(input);
         output << "Тест " << i+1 << ": " << endl;
@@ -117,7 +122,13 @@ int main() {
         output << "  Результат: " << result.distance << endl;
         output << "  Время: " << result.time << " мкс" << endl;
         output << "---" << endl;
+        totalTime += result.time;
     }
+    double averageTime = totalTime / numOfTestCases;
+    output.seekp(0);
+    output << "Общее время выполнения: " << totalTime << " мкс" << endl;
+    output << "Среднее время выполнения: " << averageTime << " mks" << endl;
+    output << "Количество тестов: " << numOfTestCases << endl << endl;
     input.close();
     output.close();
     cout << "The results are written to results.txt"<< endl;
