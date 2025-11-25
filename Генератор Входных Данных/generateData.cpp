@@ -8,8 +8,8 @@ using namespace std;
 
 int main() {
     ofstream file("input.txt");
-    int numTests = 10;
-    // cin >> numTests;
+    int numTests;
+    cin >> numTests;
     int minNumOfVertices = 10; 
     int maxNumOfVertices = 300; 
     int minNumOfRibs = 300; 
